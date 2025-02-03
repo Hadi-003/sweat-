@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma Boutique</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #343a40;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #6c757d;
+            font-size: 1.5rem;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #formulaire {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        #commandes {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        .commande {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            text-align: left;
+        }
+
+        .commande strong {
+            color: #343a40;
+        }
+
+        .supprimer {
+            background-color: red;
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            transition: 0.3s;
+        }
+
+        .supprimer:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bienvenue sur Ma Boutique</h1>
+    <h2>Produit : T-shirt personnalisé</h2>
+    
+    <button onclick="afficherFormulaire()">Commander</button>
+
+    <div id="formulaire" style="display: none;">
+        <h3>Formulaire de commande</h3>
+        <input type="text" placeholder="Votre nom" id="nom">
+        <input type="text" placeholder="Votre adresse" id="adresse">
+        <input type="tel" placeholder="Votre numéro de téléphone" id="telephone">
+        <input type="number" placeholder="Quantité" id="quantite">
+        <button onclick="envoyerCommande()">Envoyer</button>
+    </div>
+
+    <div id="commandes" style="display: none;">
+        <h3>Liste des commandes</h3>
+        <div id="liste-commandes"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", chargerCommandes);
+
+        function afficherFormulaire() {
+            document.getElementById('formulaire').style.display = 'block';
+        }
+
+        function envoyerCommande() {
+            let nom = document.getElementById('nom').value;
+            let adresse = document.getElementById('adresse').value;
+            let telephone = document.getElementById('telephone').value;
+            let quantite = document.getElementById('quantite').value;
+
+            if (nom === "" || adresse === "" || telephone === "" || quantite === "") {
+                alert("Veuillez remplir tous les champs !");
+                return;
+            }
+
+            let commande = { nom, adresse, telephone, quantite };
+            ajouterCommande(commande);
+            sauvegarderCommande(commande);
+
+            document.getElementById('nom').value = "";
+            document.getElementById('adresse').value = "";
+            document.getElementById('telephone').value = "";
+            document.getElementById('quantite').value = "";
+        }
+
+        function ajouterCommande(commande) {
+            let commandeDiv = document.createElement("div");
+            commandeDiv.classList.add("commande");
+            commandeDiv.innerHTML = `
+                <strong>Nom:</strong> ${commande.nom} <br>
+                <strong>Adresse:</strong> ${commande.adresse} <br>
+                <strong>Téléphone:</strong> ${commande.telephone} <br>
+                <strong>Quantité:</strong> ${commande.quantite} <br>
+                <button class="supprimer" onclick="supprimerCommande(this, '${commande.nom}')">❌ Supprimer</button>
+            `;
+
+            document.getElementById('liste-commandes').appendChild(commandeDiv);
+            document.getElementById('commandes').style.display = 'block';
+        }
+
+        function supprimerCommande(element, nom) {
+            element.parentElement.remove();
+            supprimerCommandeLocalStorage(nom);
+        }
+
+        function sauvegarderCommande(commande) {
+            let commandes = JSON.parse(localStorage.getItem("commandes")) || [];
+            commandes.push(commande);
+            localStorage.setItem("commandes", JSON.stringify(commandes));
+        }
+
+        function supprimerCommandeLocalStorage(nom) {
+            let commandes = JSON.parse(localStorage.getItem("commandes")) || [];
+            commandes = commandes.filter(c => c.nom !== nom);
+            localStorage.setItem("commandes", JSON.stringify(commandes));
+        }
+
+        function chargerCommandes() {
+            let commandes = JSON.parse(localStorage.getItem("commandes")) || [];
+            if (commandes.length > 0) {
+                commandes.forEach(ajouterCommande);
+                document.getElementById('commandes').style.display = 'block';
+            }
+        }
+    </script>
+
+</body>
+</html>
