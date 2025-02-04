@@ -76,30 +76,11 @@
             border-radius: 8px;
             margin: 10px 0;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            position: relative;
             text-align: left;
         }
 
         .commande strong {
             color: #343a40;
-        }
-
-        .supprimer {
-            background-color: red;
-            padding: 8px 15px;
-            border-radius: 5px;
-            border: none;
-            color: white;
-            font-size: 14px;
-            cursor: pointer;
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            transition: 0.3s;
-        }
-
-        .supprimer:hover {
-            background-color: darkred;
         }
     </style>
 </head>
@@ -109,7 +90,6 @@
     <h2>Produit : T-shirt personnalisé</h2>
     
     <button onclick="window.location.href='https://docs.google.com/forms/d/e/1FAIpQLSdDm6rC_1NaQRKYp6sA-kgoYETFGTCvS1AqQUNbLjpHZO_hKQ/viewform?usp=header';">Commander maintenant</button>
-
 
     <div id="formulaire" style="display: none;">
         <h3>Formulaire de commande</h3>
@@ -161,27 +141,15 @@
                 <strong>Adresse:</strong> ${commande.adresse} <br>
                 <strong>Téléphone:</strong> ${commande.telephone} <br>
                 <strong>Quantité:</strong> ${commande.quantite} <br>
-                <button class="supprimer" onclick="supprimerCommande(this, '${commande.nom}')">❌ Supprimer</button>
             `;
 
             document.getElementById('liste-commandes').appendChild(commandeDiv);
             document.getElementById('commandes').style.display = 'block';
         }
 
-        function supprimerCommande(element, nom) {
-            element.parentElement.remove();
-            supprimerCommandeLocalStorage(nom);
-        }
-
         function sauvegarderCommande(commande) {
             let commandes = JSON.parse(localStorage.getItem("commandes")) || [];
             commandes.push(commande);
-            localStorage.setItem("commandes", JSON.stringify(commandes));
-        }
-
-        function supprimerCommandeLocalStorage(nom) {
-            let commandes = JSON.parse(localStorage.getItem("commandes")) || [];
-            commandes = commandes.filter(c => c.nom !== nom);
             localStorage.setItem("commandes", JSON.stringify(commandes));
         }
 
