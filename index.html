@@ -33,7 +33,7 @@
             background-color: #c2185b;
         }
 
-        #formulaire, #commandes {
+        #formulaire {
             background: white;
             padding: 20px;
             border-radius: 10px;
@@ -41,7 +41,6 @@
             width: 90%;
             max-width: 400px;
             margin: 20px auto;
-            display: none;
             text-align: left;
         }
 
@@ -51,14 +50,6 @@
             padding: 10px;
             border: 1px solid #e83e8c;
             border-radius: 5px;
-        }
-
-        .commande {
-            background: #ffe3ec;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .hidden {
@@ -83,74 +74,7 @@
         <p id="confirmation" class="hidden">Commande envoyée avec succès !</p>
     </div>
 
-    <div id="commandes">
-        <h3>Liste des commandes</h3>
-        <div id="liste-commandes"></div>
-    </div>
-
     <script>
-        document.addEventListener("DOMContentLoaded", chargerCommandes);
-
-        function afficherFormulaire() {
-            document.getElementById('formulaire').style.display = 'block';
-        }
-
-        function envoyerCommande() {
-            let nom = document.getElementById('nom').value.trim();
-            let adresse = document.getElementById('adresse').value.trim();
-            let telephone = document.getElementById('telephone').value.trim();
-            let quantite = document.getElementById('quantite').value.trim();
-
-            if (!nom || !adresse || !telephone || !quantite || quantite <= 0) {
-                alert("Veuillez remplir tous les champs correctement !");
-                return;
-            }
-
-            let commande = { nom, adresse, telephone, quantite };
-            ajouterCommande(commande);
-            sauvegarderCommande(commande);
-
-            document.getElementById('nom').value = "";
-            document.getElementById('adresse').value = "";
-            document.getElementById('telephone').value = "";
-            document.getElementById('quantite').value = "";
-
-            document.getElementById('confirmation').classList.remove('hidden');
-            setTimeout(() => {
-                document.getElementById('confirmation').classList.add('hidden');
-            }, 3000);
-        }
-
-        function ajouterCommande(commande) {
-            let commandeDiv = document.createElement("div");
-            commandeDiv.classList.add("commande");
-            commandeDiv.innerHTML = `
-                <strong>Nom:</strong> ${commande.nom} <br>
-                <strong>Adresse:</strong> ${commande.adresse} <br>
-                <strong>Téléphone:</strong> ${commande.telephone} <br>
-                <strong>Quantité:</strong> ${commande.quantite} <br>
-            `;
-
-            document.getElementById('liste-commandes').appendChild(commandeDiv);
-            document.getElementById('commandes').style.display = 'block';
-        }
-
-        function sauvegarderCommande(commande) {
-            let commandes = JSON.parse(localStorage.getItem("commandes")) || [];
-            commandes.push(commande);
-            localStorage.setItem("commandes", JSON.stringify(commandes));
-        }
-
-        function chargerCommandes() {
-            let commandes = JSON.parse(localStorage.getItem("commandes")) || [];
-            if (commandes.length > 0) {
-                commandes.forEach(ajouterCommande);
-                document.getElementById('commandes').style.display = 'block';
-            }
-        }
-    </script>
-
-</body>
-</html>
+        function afficher
 
 
