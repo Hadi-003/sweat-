@@ -70,12 +70,8 @@
 
     <h1>Shop Ultras</h1>
     <h2>Produit : T-shirt personnalisé</h2>
-    
-    <button onclick="window.location.href='https://docs.google.com/forms/d/e/1FAIpQLSdDm6rC_1NaQRKYp6sA-kgoYETFGTCvS1AqQUNbLjpHZO_hKQ/viewform?usp=header';">
-        Commander sur Google Forms
-    </button>
 
-    <button onclick="afficherFormulaire()">Commander ici</button>
+    <button onclick="afficherFormulaire()">Commander maintenant</button>
 
     <div id="formulaire">
         <h3>Formulaire de commande</h3>
@@ -90,7 +86,6 @@
     <div id="commandes">
         <h3>Liste des commandes</h3>
         <div id="liste-commandes"></div>
-        <button onclick="viderCommandes()">Vider les commandes</button>
     </div>
 
     <script>
@@ -152,12 +147,6 @@
                 commandes.forEach(ajouterCommande);
                 document.getElementById('commandes').style.display = 'block';
             }
-        }
-
-        function viderCommandes() {
-            localStorage.removeItem("commandes");
-            document.getElementById('liste-commandes').innerHTML = "";
-            document.getElementById('commandes').style.display = 'none';
         }
     </script>
 
