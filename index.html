@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,11 +13,9 @@
             padding: 20px;
             text-align: center;
         }
-
         h1 {
             color: #d63384;
         }
-
         button {
             background-color: #e83e8c;
             color: white;
@@ -28,11 +27,9 @@
             transition: 0.3s;
             margin: 10px;
         }
-
         button:hover {
             background-color: #c2185b;
         }
-
         #formulaire {
             background: white;
             padding: 20px;
@@ -43,7 +40,6 @@
             margin: 20px auto;
             text-align: left;
         }
-
         input {
             width: 100%;
             margin: 10px 0;
@@ -51,52 +47,36 @@
             border: 1px solid #e83e8c;
             border-radius: 5px;
         }
-
         .hidden {
             display: none;
         }
     </style>
 </head>
 <body>
-
     <h1>Shop Ultras</h1>
     <h2>Produit : T-shirt personnalisé</h2>
-
     <button onclick="afficherFormulaire()">Commander maintenant</button>
-
     <div id="formulaire">
         <h3>Formulaire de commande</h3>
         <input type="text" placeholder="Votre nom" id="nom">
-        <input type="text" placeholder="Votre adresse" id="adresse">
         <input type="tel" placeholder="Votre numéro de téléphone" id="telephone">
-        <input type="number" placeholder="Quantité" id="quantite" min="1">
         <button onclick="envoyerCommande()">Envoyer</button>
         <p id="confirmation" class="hidden">Commande envoyée avec succès !</p>
     </div>
-
     <script>
         function afficherFormulaire() {
             document.getElementById('formulaire').style.display = 'block';
         }
-
         function envoyerCommande() {
             let nom = document.getElementById('nom').value.trim();
-            let adresse = document.getElementById('adresse').value.trim();
             let telephone = document.getElementById('telephone').value.trim();
-            let quantite = document.getElementById('quantite').value.trim();
-
-            if (!nom || !adresse || !telephone || !quantite || quantite <= 0) {
-                alert("Veuillez remplir tous les champs correctement !");
+            if (!nom || !telephone) {
+                alert("Veuillez remplir tous les champs !");
                 return;
             }
-
-            // Remplace ces valeurs avec les IDs de ton formulaire Google Forms
             let formData = new FormData();
-            formData.append("entry.123456789", nom);        // ID du champ "Nom"
-            formData.append("entry.987654321", adresse);    // ID du champ "Adresse"
-            formData.append("entry.456789123", telephone);  // ID du champ "Téléphone"
-            formData.append("entry.321654987", quantite);   // ID du champ "Quantité"
-
+            formData.append("entry.123456789", nom); // Remplace par l'ID correct
+            formData.append("entry.987654321", telephone); // Remplace par l'ID correct
             fetch("https://docs.google.com/forms/d/e/1FAIpQLSc5PN2AiZmNHwKm8FlH0ID_YSaZ0qKgfu97s1c8TDhpycgoAA/formResponse", {
                 method: "POST",
                 body: formData,
@@ -107,12 +87,11 @@
                     document.getElementById('confirmation').classList.add('hidden');
                 }, 3000);
             }).catch(error => {
-                alert("Erreur lors de l'envoi. Vérifiez votre connexion.");
+                alert("Erreur lors de l'envoi !");
                 console.error(error);
             });
         }
     </script>
-
 </body>
 </html>
 
