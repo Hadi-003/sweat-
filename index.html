@@ -75,6 +75,46 @@
     </div>
 
     <script>
-        function afficher
+        function afficherFormulaire() {
+            document.getElementById('formulaire').style.display = 'block';
+        }
+
+        function envoyerCommande() {
+            let nom = document.getElementById('nom').value.trim();
+            let adresse = document.getElementById('adresse').value.trim();
+            let telephone = document.getElementById('telephone').value.trim();
+            let quantite = document.getElementById('quantite').value.trim();
+
+            if (!nom || !adresse || !telephone || !quantite || quantite <= 0) {
+                alert("Veuillez remplir tous les champs correctement !");
+                return;
+            }
+
+            // Remplace ces valeurs avec les IDs de ton formulaire Google Forms
+            let formData = new FormData();
+            formData.append("entry.123456789", nom);        // ID du champ "Nom"
+            formData.append("entry.987654321", adresse);    // ID du champ "Adresse"
+            formData.append("entry.456789123", telephone);  // ID du champ "Téléphone"
+            formData.append("entry.321654987", quantite);   // ID du champ "Quantité"
+
+            fetch("https://docs.google.com/forms/d/e/1FAIpQLSc5PN2AiZmNHwKm8FlH0ID_YSaZ0qKgfu97s1c8TDhpycgoAA/formResponse", {
+                method: "POST",
+                body: formData,
+                mode: "no-cors"
+            }).then(() => {
+                document.getElementById('confirmation').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('confirmation').classList.add('hidden');
+                }, 3000);
+            }).catch(error => {
+                alert("Erreur lors de l'envoi. Vérifiez votre connexion.");
+                console.error(error);
+            });
+        }
+    </script>
+
+</body>
+</html>
+
 
 
