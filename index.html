@@ -62,6 +62,7 @@
         <button onclick="envoyerCommande()">Envoyer</button>
         <p id="confirmation" class="hidden">Commande envoyée avec succès !</p>
     </div>
+
     <script>
         function afficherFormulaire() {
             document.getElementById('formulaire').style.display = 'block';
@@ -76,15 +77,14 @@
             }
 
             let formData = new FormData();
-            // Remplace les IDs avec ceux de ton formulaire
-            formData.append("entry.123456789", nom);  // Remplace par l'ID du champ "Nom" dans ton Google Form
-            formData.append("entry.987654321", telephone);  // Remplace par l'ID du champ "Numéro de téléphone" dans ton Google Form
+            formData.append("nom", nom);
+            formData.append("telephone", telephone);
 
-            // URL de soumission de ton formulaire Google Form
-            fetch("https://docs.google.com/forms/d/e/1FAIpQLSc8uVSKfTPiylhANekEDOFCdbr2Uk7N_xL_dLMtYL-o8ENN-Q/formResponse", {
+            // Remplace par l'URL du script Google Apps (l'URL que tu as copiée)
+            fetch("https://script.google.com/macros/s/AKfycbw1jF2XxCmLCZoVjT0VX1o_iFZXu9DBt69E80eECz89X6yUkjIbVeeM1VY3I4Ujk46z/exec", {
                 method: "POST",
                 body: formData,
-                mode: "no-cors"  // Mode "no-cors" nécessaire pour éviter le blocage par le navigateur
+                mode: "no-cors"  // Mode no-cors nécessaire pour éviter le blocage
             }).then(() => {
                 document.getElementById('confirmation').classList.remove('hidden');
                 setTimeout(() => {
